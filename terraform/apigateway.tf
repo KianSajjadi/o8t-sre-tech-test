@@ -23,6 +23,11 @@ resource "aws_apigatewayv2_stage" "default" {
       latency        = "$context.responseLatency"
     })
   }
+
+  default_route_settings {
+    throttling_burst_limit =   local.apigateway_throttling_burst_limit
+    throttling_rate_limit = local.apigateway_throttling_rate_limit
+  }
 }
 
 resource "aws_apigatewayv2_integration" "lambda_integration" {
