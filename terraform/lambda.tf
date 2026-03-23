@@ -21,7 +21,7 @@ resource "aws_lambda_function" "llm_service" {
   }
 
   tracing_config {
-    mode = "Active" # Enable X-Ray tracing
+    mode = "Active"
   }
 
   reserved_concurrent_executions = var.lambda_reserved_concurrency
