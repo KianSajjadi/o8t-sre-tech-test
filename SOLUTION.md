@@ -17,10 +17,14 @@ Reliability and Scaling
 Costs
 
 
-Monitoring
-- Cloudwatch alarms
-  - Lambda Errors
-  - Lambda duration
-  - Lambda throttles
+Monitoring and observability
+I've chosen AWS resources to use for this due to convenience's sake, however this can be done with datadog, newrelic, etc.
+- Cloudwatch Alarms
+  - Lambda Errors: 5 errors in 5 minutes
+  - Lambda duration: function taking greater than 5 seconds
+  - Lambda throttles: more than 5 per 5 min, this can be further granularised if using lambda managed instances
   - API 5xx errors
   - API Latency
+
+- AWS X-Ray 
+
