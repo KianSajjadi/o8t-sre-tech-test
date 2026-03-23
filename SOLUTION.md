@@ -26,5 +26,5 @@ I've chosen AWS resources to use for this due to convenience's sake, however thi
   - API 5xx errors
   - API Latency
 
-- AWS X-Ray 
+- AWS X-Ray and logging for lambda
 
