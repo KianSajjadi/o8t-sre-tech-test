@@ -43,7 +43,7 @@ resource "aws_lambda_permission" "api_gw" {
 }
 
 resource "aws_cloudwatch_log_group" "lambda_logs" {
-  name              = "/aws/lambda/${aws_lambda_function.llm_service.function_name}"
+  name = "/aws/lambda/${aws_lambda_function.llm_service.function_name}"
   # 30 days for iso27001 compliance
   retention_in_days = 30
 }
@@ -51,16 +51,16 @@ resource "aws_cloudwatch_log_group" "lambda_logs" {
 
 # number of errors over 300 seconds greater than 5 triggers an alarm
 resource "aws_cloudwatch_metric_alarm" "lambda_errors" {
-  alarm_name = "llm_service_lambda_errors"
+  alarm_name          = "llm_service_lambda_errors"
   comparison_operator = "GreaterThanThreshold"
-  evaluation_periods = 2
-  metric_name = "Errors"
-  namespace = "AWS/Lambda"
-  period = "300"
-  statistic = "Sum"
-  threshold = 5
-  alarm_description = "Lambda function ${aws_lambda_function.llm_service.function_name} has more than 5 errors in 5 minutes"
-  alarm_actions = [aws_sns_topic.alerts.arn]
+  evaluation_periods  = 2
+  metric_name         = "Errors"
+  namespace           = "AWS/Lambda"
+  period              = "300"
+  statistic           = "Sum"
+  threshold           = 5
+  alarm_description   = "Lambda function ${aws_lambda_function.llm_service.function_name} has more than 5 errors in 5 minutes"
+  alarm_actions       = [aws_sns_topic.alerts.arn]
 
   dimensions = {
     FunctionName = aws_lambda_function.llm_service.function_name
@@ -69,16 +69,16 @@ resource "aws_cloudwatch_metric_alarm" "lambda_errors" {
 
 # invocation duration of greater than 5 seconds will trigger
 resource "aws_cloudwatch_metric_alarm" "lambda_duration" {
-  alarm_name = "llm_service_lambda_duration"
+  alarm_name          = "llm_service_lambda_duration"
   comparison_operator = "GreaterThanThreshold"
-  evaluation_periods = 2
-  metric_name = "Duration"
-  namespace = "AWS/Lambda"
-  period = "300"
-  statistic = "Average"
-  threshold = "5000"
-  alarm_description = "Lambda function ${aws_lambda_function.llm_service.function_name} taking longer than 5 seconds"
-  alarm_actions = [aws_sns_topic.alerts.arn]
+  evaluation_periods  = 2
+  metric_name         = "Duration"
+  namespace           = "AWS/Lambda"
+  period              = "300"
+  statistic           = "Average"
+  threshold           = "5000"
+  alarm_description   = "Lambda function ${aws_lambda_function.llm_service.function_name} taking longer than 5 seconds"
+  alarm_actions       = [aws_sns_topic.alerts.arn]
 
   dimensions = {
     FunctionName = aws_lambda_function.llm_service.function_name
@@ -87,16 +87,16 @@ resource "aws_cloudwatch_metric_alarm" "lambda_duration" {
 
 # number of lambda invocations that are throttling > 5 over a 5min period
 resource "aws_cloudwatch_metric_alarm" "lambda_throttles" {
-  alarm_name = "llm_service_lambda_throttles"
+  alarm_name          = "llm_service_lambda_throttles"
   comparison_operator = "GreaterThanThreshold"
-  evaluation_periods = 2
-  metric_name = "Duration"
-  namespace = "AWS/Lambda"
-  period = "300"
-  statistic = "Sum"
-  threshold = "5"
-  alarm_description = "Lambda function ${aws_lambda_function.llm_service.function_name} throttling more than 5 times per 5 min"
-  alarm_actions = [aws_sns_topic.alerts.arn]
+  evaluation_periods  = 2
+  metric_name         = "Duration"
+  namespace           = "AWS/Lambda"
+  period              = "300"
+  statistic           = "Sum"
+  threshold           = "5"
+  alarm_description   = "Lambda function ${aws_lambda_function.llm_service.function_name} throttling more than 5 times per 5 min"
+  alarm_actions       = [aws_sns_topic.alerts.arn]
 
   dimensions = {
     FunctionName = aws_lambda_function.llm_service.function_name

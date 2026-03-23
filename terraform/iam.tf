@@ -50,3 +50,25 @@ resource "aws_iam_role_policy_attachment" "lambda_xray" {
   role       = aws_iam_role.lambda_role.id
   policy_arn = "arn:aws:iam::aws:policy/AWSXRayDaemonWriteAccess"
 }
+
+# ################################ APIGATEWAY ################################ #
+resource "aws_iam_role" "apigw_cloudwatch" {
+  name = "api_gateway_cloudwatch"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Action = "sts:AssumeRole"
+      Effect = "Allow"
+      Principal = {
+        Service = "apigateway.amazonaws.com"
+      }
+    }]
+  })
+}
+
+# Attach the managed policy for CloudWatch logging
+resource "aws_iam_role_policy_attachment" "apigw_cloudwatch" {
+  role       = aws_iam_role.apigw_cloudwatch.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+}

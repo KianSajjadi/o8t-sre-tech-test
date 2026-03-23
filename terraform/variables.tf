@@ -15,3 +15,8 @@ variable "lambda_reserved_concurrency" {
   type        = number
   default     = 1000
 }
+
+variable "cloudwatch_email" {
+  type    = string
+  default = "sysadmins@org"
+}
